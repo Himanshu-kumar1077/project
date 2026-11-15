@@ -1,0 +1,43 @@
+
+const menuToggle = document.getElementById('menuToggle');
+const navLinks = document.getElementById('navLinks');
+
+// Mobile navigation
+menuToggle.addEventListener('click', () => {
+  const isOpen = navLinks.classList.toggle('open');
+  menuToggle.setAttribute('aria-expanded', isOpen);
+  menuToggle.textContent = isOpen ? '✕' : '☰';
+});
+
+// Close menu after clicking a link
+navLinks.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', () => {
+    navLinks.classList.remove('open');
+    menuToggle.setAttribute('aria-expanded', 'false');
+    menuToggle.textContent = '☰';
+  });
+});
+
+// Display current year
+document.getElementById('year').textContent =
+  new Date().getFullYear();
+
+// Contact form
+document.getElementById('contactForm').addEventListener('submit', (event) => {
+  event.preventDefault();
+
+  const form = event.currentTarget;
+  const name = form.elements.name.value.trim();
+  const email = form.elements.email.value.trim();
+  const message = form.elements.message.value.trim();
+
+  const recipient = 'YOUR_EMAIL@gmail.com';
+
+  const subject = encodeURIComponent('Rento Website Enquiry');
+  const body = encodeURIComponent(
+    `Name: ${name}\nEmail: ${email}\nMessage: ${message}`
+  );
+
+  window.location.href =
+    `mailto:${recipient}?subject=${subject}&body=${body}`;
+});
